@@ -38,10 +38,20 @@ Object.defineProperty(exports, '__esModule', {
 });
 var AddController = function AddController($scope, $http, PARSE) {
 
-  console.log(PARSE);
+  var url = PARSE.URL + 'classes/whiskey';
+
+  var Whiskey = function Whiskey(obj) {
+    this.name = obj.name;
+    this.maker = obj.maker;
+    this.hasTried = false;
+  };
 
   $scope.addWhiskey = function (obj) {
-    console.log(obj);
+    var w = new Whiskey(obj);
+
+    $http.post(url, w, PARSE.CONFIG).then(function (res) {
+      $scope.whiskey = {};
+    });
   };
 };
 
@@ -56,9 +66,16 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var ListController = function ListController($scope) {};
+var ListController = function ListController($scope, $http, PARSE) {
 
-ListController.$inject = ['$scope'];
+  var url = PARSE.URL + 'classes/whiskey';
+
+  $http.get(url, PARSE.CONFIG).then(function (res) {
+    $scope.whiskeys = res.data.results;
+  });
+};
+
+ListController.$inject = ['$scope', '$http', 'PARSE'];
 
 exports['default'] = ListController;
 module.exports = exports['default'];

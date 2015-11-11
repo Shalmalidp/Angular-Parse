@@ -1,9 +1,20 @@
 let AddController = function($scope, $http, PARSE) {
   
-  console.log(PARSE);
+  let url = PARSE.URL + 'classes/whiskey';
+
+  let Whiskey = function (obj) {
+    this.name = obj.name;
+    this.maker = obj.maker;
+    this.hasTried = false;
+  };
 
   $scope.addWhiskey = (obj) => {
-    console.log(obj);
+    let w = new Whiskey(obj);
+
+    $http.post(url, w, PARSE.CONFIG).then( (res) => {
+      $scope.whiskey = {};
+    });
+
   };
 
 };
