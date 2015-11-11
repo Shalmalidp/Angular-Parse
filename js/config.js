@@ -9,6 +9,7 @@ let config = function($stateProvider, $urlRouterProvider) {
     })
     .state('root.list', {
       url: '/',
+      controller: 'ListController',
       templateUrl: 'templates/list.tpl.html'
     })
     .state('root.single', {
@@ -17,6 +18,7 @@ let config = function($stateProvider, $urlRouterProvider) {
     })
     .state('root.add', {
       url: '/add',
+      controller: 'AddController',
       templateUrl: 'templates/add.tpl.html'
     });
 

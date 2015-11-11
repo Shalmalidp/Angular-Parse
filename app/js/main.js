@@ -13,12 +13,14 @@ var config = function config($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/layout.tpl.html'
   }).state('root.list', {
     url: '/',
+    controller: 'ListController',
     templateUrl: 'templates/list.tpl.html'
   }).state('root.single', {
     url: '/single/:id',
     templateUrl: 'templates/single.tpl.html'
   }).state('root.add', {
     url: '/add',
+    controller: 'AddController',
     templateUrl: 'templates/add.tpl.html'
   });
 };
@@ -29,6 +31,37 @@ exports['default'] = config;
 module.exports = exports['default'];
 
 },{}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var AddController = function AddController($scope, $http) {
+
+  $scope.addWhiskey = function (obj) {
+    console.log(obj);
+  };
+};
+
+AddController.$inject = ['$scope', '$http'];
+
+exports['default'] = AddController;
+module.exports = exports['default'];
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var ListController = function ListController($scope) {};
+
+ListController.$inject = ['$scope'];
+
+exports['default'] = ListController;
+module.exports = exports['default'];
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -43,9 +76,17 @@ var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']);
+var _controllersAddController = require('./controllers/add.controller');
 
-},{"./config":1,"angular":5,"angular-ui-router":3}],3:[function(require,module,exports){
+var _controllersAddController2 = _interopRequireDefault(_controllersAddController);
+
+var _controllersListController = require('./controllers/list.controller');
+
+var _controllersListController2 = _interopRequireDefault(_controllersListController);
+
+_angular2['default'].module('app', ['ui.router']).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']);
+
+},{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"angular":7,"angular-ui-router":5}],5:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4416,7 +4457,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33321,11 +33362,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":4}]},{},[2])
+},{"./angular":6}]},{},[4])
 
 
 //# sourceMappingURL=main.js.map
