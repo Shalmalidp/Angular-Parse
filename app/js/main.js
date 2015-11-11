@@ -17,6 +17,9 @@ var config = function config($stateProvider, $urlRouterProvider) {
   }).state('root.single', {
     url: '/single/:id',
     templateUrl: 'templates/single.tpl.html'
+  }).state('root.add', {
+    url: '/add',
+    templateUrl: 'templates/add.tpl.html'
   });
 };
 
