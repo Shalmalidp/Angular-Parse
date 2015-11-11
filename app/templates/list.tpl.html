@@ -2,6 +2,6 @@
 
 <ul>
   <li ng-repeat="whiskey in whiskeys">
-    {{ whiskey.name }} from {{ whiskey.maker }}
+    <a href="#/single/{{ whiskey.objectId }}">{{ whiskey.name }} from {{ whiskey.maker }}</a>
   </li>
 </ul>

@@ -5,6 +5,7 @@ import config from './config';
 
 import AddController from './controllers/add.controller';
 import ListController from './controllers/list.controller';
+import SingleController from './controllers/single.controller';
 
 angular
   .module('app', ['ui.router'])
@@ -20,4 +21,5 @@ angular
   .config(config)
   .controller('AddController', AddController)
   .controller('ListController', ListController)
+  .controller('SingleController', SingleController)
 ;
