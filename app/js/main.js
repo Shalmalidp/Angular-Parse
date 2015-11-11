@@ -36,14 +36,16 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddController = function AddController($scope, $http) {
+var AddController = function AddController($scope, $http, PARSE) {
+
+  console.log(PARSE);
 
   $scope.addWhiskey = function (obj) {
     console.log(obj);
   };
 };
 
-AddController.$inject = ['$scope', '$http'];
+AddController.$inject = ['$scope', '$http', 'PARSE'];
 
 exports['default'] = AddController;
 module.exports = exports['default'];
@@ -84,7 +86,15 @@ var _controllersListController = require('./controllers/list.controller');
 
 var _controllersListController2 = _interopRequireDefault(_controllersListController);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']);
+_angular2['default'].module('app', ['ui.router']).constant('PARSE', {
+  URL: 'https://api.parse.com/1/',
+  CONFIG: {
+    headers: {
+      'X-Parse-Application-Id': 'UeI02XrLuhmwL347moGR7XY7vSwH5bQ7fkhzL7Kx',
+      'X-Parse-REST-API-Key': 'C3s1o7jASR7XGfEw6KBTsTIUywozLAYqphxiJ291'
+    }
+  }
+}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']);
 
 },{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"angular":7,"angular-ui-router":5}],5:[function(require,module,exports){
 /**
