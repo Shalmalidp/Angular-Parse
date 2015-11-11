@@ -4,9 +4,23 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var config = function config($stateProvider) {};
+var config = function config($stateProvider, $urlRouterProvider) {
 
-config.$inject = ['$stateProvider'];
+  $urlRouterProvider.otherwise('/');
+
+  $stateProvider.state('root', {
+    abstract: true,
+    templateUrl: 'templates/layout.tpl.html'
+  }).state('root.list', {
+    url: '/',
+    templateUrl: 'templates/list.tpl.html'
+  }).state('root.single', {
+    url: '/single/:id',
+    templateUrl: 'templates/single.tpl.html'
+  });
+};
+
+config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 exports['default'] = config;
 module.exports = exports['default'];
