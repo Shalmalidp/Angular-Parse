@@ -1,22 +1,9 @@
-let ListController = function($scope, $http, PARSE, WhiskeyService, WhiskeyFactory) {
+let ListController = function($scope, WhiskeyService) {
 
-  console.log(WhiskeyService.foo);
-  console.log(WhiskeyFactory.baz());
-  
-  let url = PARSE.URL + 'classes/whiskey';
-
-  $http({
-    url: url,
-    headers: PARSE.CONFIG.headers,
-    method: 'GET',
-    cache: true
-  }).then ( (res) => {
+  WhiskeyService.getWhiskeys().then ( (res) => {
     $scope.whiskeys = res.data.results;
   });
 
-
 };
-
-ListController.$inject = ['$scope', '$http', 'PARSE', 'WhiskeyService', 'WhiskeyFactory'];
-
+ListController.$inject = ['$scope', 'WhiskeyService'];
 export default ListController;

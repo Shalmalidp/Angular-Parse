@@ -9,8 +9,6 @@ import SingleController from './controllers/single.controller';
 
 import WhiskeyService from './services/whiskey.service';
 
-import WhiskeyFactory from './factories/whiskey.factory';
-
 angular
   .module('app', ['ui.router'])
   .constant('PARSE', {
@@ -27,5 +25,4 @@ angular
   .controller('ListController', ListController)
   .controller('SingleController', SingleController)
   .service('WhiskeyService', WhiskeyService)
-  .factory('WhiskeyFactory', WhiskeyFactory)
 ;

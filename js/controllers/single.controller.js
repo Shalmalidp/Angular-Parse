@@ -1,24 +1,9 @@
-let SingleController = function($scope, $stateParams, $http, PARSE) {
+let SingleController = function($scope, $stateParams, WhiskeyService) {
   
-  let url = PARSE.URL + 'classes/whiskey/' + $stateParams.whiskeyId;
-
-  // $http.get(url, PARSE.CONFIG).then( (res) => {
-
-  //   $scope.singleWhiskey = res.data;
-
-  // });
-
-  $http({
-    method: 'GET',
-    url: url,
-    headers: PARSE.CONFIG.headers,
-    cache: true
-  }).then( (res) => {
+  WhiskeyService.getWhiskey($stateParams.whiskeyId).then( (res) => {
     $scope.singleWhiskey = res.data;
   });
 
 };
-
-SingleController.$inject = ['$scope', '$stateParams', '$http', 'PARSE'];
-
+SingleController.$inject = ['$scope', '$stateParams', 'WhiskeyService'];
 export default SingleController;

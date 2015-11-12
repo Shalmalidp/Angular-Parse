@@ -67,25 +67,13 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var ListController = function ListController($scope, $http, PARSE, WhiskeyService, WhiskeyFactory) {
+var ListController = function ListController($scope, WhiskeyService) {
 
-  console.log(WhiskeyService.foo);
-  console.log(WhiskeyFactory.baz());
-
-  var url = PARSE.URL + 'classes/whiskey';
-
-  $http({
-    url: url,
-    headers: PARSE.CONFIG.headers,
-    method: 'GET',
-    cache: true
-  }).then(function (res) {
+  WhiskeyService.getWhiskeys().then(function (res) {
     $scope.whiskeys = res.data.results;
   });
 };
-
-ListController.$inject = ['$scope', '$http', 'PARSE', 'WhiskeyService', 'WhiskeyFactory'];
-
+ListController.$inject = ['$scope', 'WhiskeyService'];
 exports['default'] = ListController;
 module.exports = exports['default'];
 
@@ -95,54 +83,17 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var SingleController = function SingleController($scope, $stateParams, $http, PARSE) {
+var SingleController = function SingleController($scope, $stateParams, WhiskeyService) {
 
-  var url = PARSE.URL + 'classes/whiskey/' + $stateParams.whiskeyId;
-
-  // $http.get(url, PARSE.CONFIG).then( (res) => {
-
-  //   $scope.singleWhiskey = res.data;
-
-  // });
-
-  $http({
-    method: 'GET',
-    url: url,
-    headers: PARSE.CONFIG.headers,
-    cache: true
-  }).then(function (res) {
+  WhiskeyService.getWhiskey($stateParams.whiskeyId).then(function (res) {
     $scope.singleWhiskey = res.data;
   });
 };
-
-SingleController.$inject = ['$scope', '$stateParams', '$http', 'PARSE'];
-
+SingleController.$inject = ['$scope', '$stateParams', 'WhiskeyService'];
 exports['default'] = SingleController;
 module.exports = exports['default'];
 
 },{}],5:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-var WhiskeyFactory = function WhiskeyFactory() {
-
-  var foo = function foo() {
-    return 'bar from factory';
-  };
-
-  return {
-    baz: foo
-  };
-};
-
-WhiskeyFactory.$inject = [];
-
-exports['default'] = WhiskeyFactory;
-module.exports = exports['default'];
-
-},{}],6:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -173,10 +124,6 @@ var _servicesWhiskeyService = require('./services/whiskey.service');
 
 var _servicesWhiskeyService2 = _interopRequireDefault(_servicesWhiskeyService);
 
-var _factoriesWhiskeyFactory = require('./factories/whiskey.factory');
-
-var _factoriesWhiskeyFactory2 = _interopRequireDefault(_factoriesWhiskeyFactory);
-
 _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
   URL: 'https://api.parse.com/1/',
   CONFIG: {
@@ -185,25 +132,43 @@ _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
       'X-Parse-REST-API-Key': 'C3s1o7jASR7XGfEw6KBTsTIUywozLAYqphxiJ291'
     }
   }
-}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']).controller('SingleController', _controllersSingleController2['default']).service('WhiskeyService', _servicesWhiskeyService2['default']).factory('WhiskeyFactory', _factoriesWhiskeyFactory2['default']);
+}).config(_config2['default']).controller('AddController', _controllersAddController2['default']).controller('ListController', _controllersListController2['default']).controller('SingleController', _controllersSingleController2['default']).service('WhiskeyService', _servicesWhiskeyService2['default']);
 
-},{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"./controllers/single.controller":4,"./factories/whiskey.factory":5,"./services/whiskey.service":7,"angular":10,"angular-ui-router":8}],7:[function(require,module,exports){
+},{"./config":1,"./controllers/add.controller":2,"./controllers/list.controller":3,"./controllers/single.controller":4,"./services/whiskey.service":6,"angular":9,"angular-ui-router":7}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var WhiskeyService = function WhiskeyService() {
+var WhiskeyService = function WhiskeyService($http, PARSE) {
 
-  this.foo = 'bar from service';
+  var url = PARSE.URL + 'classes/whiskey';
+
+  this.getWhiskeys = function () {
+    return $http({
+      url: url,
+      headers: PARSE.CONFIG.headers,
+      method: 'GET',
+      cache: true
+    });
+  };
+
+  this.getWhiskey = function (whiskeyId) {
+    return $http({
+      method: 'GET',
+      url: url + '/' + whiskeyId,
+      headers: PARSE.CONFIG.headers,
+      cache: true
+    });
+  };
 };
 
-WhiskeyService.$inject = [];
+WhiskeyService.$inject = ['$http', 'PARSE'];
 
 exports['default'] = WhiskeyService;
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4574,7 +4539,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33479,11 +33444,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":9}]},{},[6])
+},{"./angular":8}]},{},[5])
 
 
 //# sourceMappingURL=main.js.map
