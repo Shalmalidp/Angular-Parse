@@ -1,24 +1,11 @@
-let AddController = function($scope, $http, PARSE) {
-  
-  let url = PARSE.URL + 'classes/whiskey';
-
-  let Whiskey = function (obj) {
-    this.name = obj.name;
-    this.maker = obj.maker;
-    this.hasTried = false;
-  };
+let AddController = function($scope, WhiskeyService) {
 
   $scope.addWhiskey = (obj) => {
-    let w = new Whiskey(obj);
-
-    $http.post(url, w, PARSE.CONFIG).then( (res) => {
+    WhiskeyService.addWhiskey(obj).then( (res) => {
       $scope.whiskey = {};
     });
-
   };
 
 };
-
-AddController.$inject = ['$scope', '$http', 'PARSE'];
-
+AddController.$inject = ['$scope', 'WhiskeyService'];
 export default AddController;

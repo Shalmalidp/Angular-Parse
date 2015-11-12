@@ -37,27 +37,15 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddController = function AddController($scope, $http, PARSE) {
-
-  var url = PARSE.URL + 'classes/whiskey';
-
-  var Whiskey = function Whiskey(obj) {
-    this.name = obj.name;
-    this.maker = obj.maker;
-    this.hasTried = false;
-  };
+var AddController = function AddController($scope, WhiskeyService) {
 
   $scope.addWhiskey = function (obj) {
-    var w = new Whiskey(obj);
-
-    $http.post(url, w, PARSE.CONFIG).then(function (res) {
+    WhiskeyService.addWhiskey(obj).then(function (res) {
       $scope.whiskey = {};
     });
   };
 };
-
-AddController.$inject = ['$scope', '$http', 'PARSE'];
-
+AddController.$inject = ['$scope', 'WhiskeyService'];
 exports['default'] = AddController;
 module.exports = exports['default'];
 
@@ -144,22 +132,41 @@ var WhiskeyService = function WhiskeyService($http, PARSE) {
 
   var url = PARSE.URL + 'classes/whiskey';
 
+  var checkAuth = function checkAuth() {
+    return true;
+  };
+
   this.getWhiskeys = function () {
-    return $http({
-      url: url,
-      headers: PARSE.CONFIG.headers,
-      method: 'GET',
-      cache: true
-    });
+    if (checkAuth()) {
+      return $http({
+        url: url,
+        headers: PARSE.CONFIG.headers,
+        method: 'GET',
+        cache: true
+      });
+    }
   };
 
   this.getWhiskey = function (whiskeyId) {
-    return $http({
-      method: 'GET',
-      url: url + '/' + whiskeyId,
-      headers: PARSE.CONFIG.headers,
-      cache: true
-    });
+    if (checkAuth()) {
+      return $http({
+        method: 'GET',
+        url: url + '/' + whiskeyId,
+        headers: PARSE.CONFIG.headers,
+        cache: true
+      });
+    }
+  };
+
+  var Whiskey = function Whiskey(obj) {
+    this.name = obj.name;
+    this.maker = obj.maker;
+    this.hasTried = false;
+  };
+
+  this.addWhiskey = function (obj) {
+    var w = new Whiskey(obj);
+    return $http.post(url, w, PARSE.CONFIG);
   };
 };
 
