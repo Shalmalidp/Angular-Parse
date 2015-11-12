@@ -9,13 +9,27 @@ let config = function($stateProvider, $urlRouterProvider) {
     })
     .state('root.list', {
       url: '/',
-      controller: 'ListController',
-      templateUrl: 'templates/list.tpl.html'
+      views: {
+        sidebar: {
+          template: '<p>I am a sidebar</p>'
+        },
+        content: {
+          controller: 'ListController',
+          templateUrl: 'templates/list.tpl.html'
+        },
+        footer: {
+          template: '<small>I am a footer</small>'
+        }
+      }
     })
     .state('root.single', {
       url: '/single/:whiskeyId',
-      controller: 'SingleController',
-      templateUrl: 'templates/single.tpl.html'
+      views: {
+        content: {       
+          controller: 'SingleController',
+          templateUrl: 'templates/single.tpl.html'
+        }
+      }
     })
     .state('root.add', {
       url: '/add',
