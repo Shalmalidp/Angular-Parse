@@ -33,8 +33,21 @@ let config = function($stateProvider, $urlRouterProvider) {
     })
     .state('root.add', {
       url: '/add',
-      controller: 'AddController',
-      templateUrl: 'templates/add.tpl.html'
+      views: {
+        content: {       
+          controller: 'AddController',
+          templateUrl: 'templates/add.tpl.html'
+        }
+      }
+    })
+    .state('root.edit', {
+      url: '/edit/:whiskeyId',
+      views: {
+        content: {
+          controller: 'EditController',
+          templateUrl: 'templates/edit.tpl.html'
+        }
+      }
     });
 
 };

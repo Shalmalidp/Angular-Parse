@@ -39,6 +39,14 @@ let WhiskeyService = function($http, PARSE) {
     return $http.post(url, w, PARSE.CONFIG);
   };
 
+  this.update = function (obj) {
+    return $http.put(url + '/' + obj.objectId, obj, PARSE.CONFIG);
+  };
+
+  this.delete = function (obj) {
+    return $http.delete(url + '/' + obj.objectId, PARSE.CONFIG);
+  };
+
 };
 
 WhiskeyService.$inject = ['$http', 'PARSE'];
